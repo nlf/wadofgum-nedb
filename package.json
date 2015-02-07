@@ -1,0 +1,30 @@
+{
+  "name": "wadofgum-nedb",
+  "version": "1.0.0-beta1",
+  "description": "an nedb plugin for wadofgum",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -a code -t 100 -L"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nlf/wadofgum-nedb.git"
+  },
+  "keywords": [
+    "wadofgum"
+  ],
+  "author": "Nathan LaFreniere <quitlahok@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nlf/wadofgum-nedb/issues"
+  },
+  "homepage": "https://github.com/nlf/wadofgum-nedb",
+  "devDependencies": {
+    "code": "^1.3.0",
+    "joi": "^5.1.0",
+    "lab": "^5.2.1",
+    "nedb": "^1.1.1",
+    "wadofgum": "^1.0.0-beta2"
+  },
+  "dependencies": {}
+}
