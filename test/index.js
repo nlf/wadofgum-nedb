@@ -18,12 +18,15 @@ lab.test('it requires an nedb database to load', function (done) {
 
     expect(function () {
 
-        Broken.use(Plugin);
+        Broken.register(Plugin);
     }).to.throw();
 
     expect(function () {
 
-        Broken.use(Plugin, {});
+        Broken.register({
+            register: Plugin,
+            options: {}
+        });
     }).to.throw();
 
     done();
@@ -44,7 +47,10 @@ lab.test('it can be loaded', function (done) {
 
     expect(function () {
 
-        User.use(Plugin, { db: db });
+        User.register({
+            register: Plugin,
+            options: { db: db }
+        });
     }).to.not.throw();
 
     done();
@@ -75,7 +81,18 @@ lab.test('it can save a model', function (done) {
     });
 });
 
-lab.test('it can find models', function (done) {
+lab.test('it can find all models', function (done) {
+
+    User.find(function (err, users) {
+
+        expect(err).to.not.exist();
+        expect(users).to.be.an.array();
+        expect(users).to.have.length(1);
+        done();
+    });
+});
+
+lab.test('it can find models with a query', function (done) {
 
     User.find({ name: 'test' }, function (err, users) {
 
