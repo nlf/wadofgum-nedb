@@ -8,8 +8,8 @@ internals.save = function (callback) {
             return callback(err);
         }
 
-        self._type = self._model.type;
-        self._model.db.insert(self, function (err) {
+        self._type = self.factory.type;
+        self.factory.db.insert(self, function (err) {
 
             self.validate();
             callback(err);
@@ -19,7 +19,7 @@ internals.save = function (callback) {
 
 internals.remove = function (callback) {
 
-    this._model.db.remove({ _type: this._model.type, _id: this.id }, function (err) {
+    this.factory.db.remove({ _type: this.factory.type, _id: this.id }, function (err) {
 
         callback(err);
     });
@@ -76,7 +76,7 @@ exports.register = function (model, options) {
         throw new Error('Must provide an NeDB database');
     }
 
-    model.bind({
+    model.extend({
         db: options.db,
         count: internals.count,
         find: internals.find,
@@ -88,9 +88,9 @@ exports.register = function (model, options) {
         remove: internals.remove
     });
 
-    model.on('preValidate', function () {
+    model.on('preValidate', function (model) {
 
-        this.id = this._id;
+        model.id = model._id;
     });
 
     options.db.ensureIndex({ fieldName: 'type', sparse: true });

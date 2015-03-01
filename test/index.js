@@ -9,7 +9,7 @@ var expect = require('code').expect;
 lab.test('it requires an nedb database to load', function (done) {
 
     var Broken = new WOG({
-        name: 'user',
+        type: 'user',
         schema: {
             id: Joi.string(),
             name: Joi.string()
@@ -38,7 +38,7 @@ var db = new NeDB();
 lab.test('it can be loaded', function (done) {
 
     User = new WOG({
-        name: 'user',
+        type: 'user',
         schema: {
             id: Joi.string(),
             name: Joi.string().required()
