@@ -83,7 +83,7 @@ exports.register = function (model, options) {
         get: internals.get
     });
 
-    model.method({
+    model.prototype.extend({
         save: internals.save,
         remove: internals.remove
     });
