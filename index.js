@@ -88,7 +88,7 @@ exports.register = function (model, options) {
         remove: internals.remove
     });
 
-    model.listen('preValidate', function (model) {
+    model.prototype.on('preValidate', function (model) {
 
         model.id = model._id;
     });
