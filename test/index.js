@@ -76,6 +76,8 @@ lab.test('it can save a model', function (done) {
 
         expect(err).to.not.exist();
         expect(user.id).to.exist();
+        expect(user._type).to.not.exist();
+        expect(user._id).to.not.exist();
         userId = user.id;
         done();
     });
