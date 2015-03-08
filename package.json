@@ -1,6 +1,6 @@
 {
   "name": "wadofgum-nedb",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "an nedb plugin for wadofgum",
   "main": "index.js",
   "scripts": {
