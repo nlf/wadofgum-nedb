@@ -66,6 +66,70 @@ lab.test('it fails to save when the model fails validation', function (done) {
     });
 });
 
+lab.test('it can prevent saving by passing an error in preSave', function (done) {
+
+    var Broken = new WOG({
+        type: 'broken',
+        schema: {
+            id: Joi.string(),
+            name: Joi.string().required()
+        }
+    });
+
+    Broken.register({
+        register: Plugin,
+        options: {
+            db: db
+        }
+    });
+
+    Broken.prototype.on('preSave', function (broken, next) {
+
+        next(new Error('failed'));
+    });
+
+    var broken = new Broken({ name: 'test' });
+    broken.save(function (err) {
+
+        expect(err).to.exist();
+        expect(err.message).to.equal('failed');
+        expect(broken.id).to.not.exist();
+        done();
+    });
+});
+
+lab.test('it can pass an error from postSave', function (done) {
+
+    var Broken = new WOG({
+        type: 'broken',
+        schema: {
+            id: Joi.string(),
+            name: Joi.string().required()
+        }
+    });
+
+    Broken.register({
+        register: Plugin,
+        options: {
+            db: db
+        }
+    });
+
+    Broken.prototype.on('postSave', function (broken, next) {
+
+        next(new Error('failed'));
+    });
+
+    var broken = new Broken({ name: 'test' });
+    broken.save(function (err) {
+
+        expect(err).to.exist();
+        expect(err.message).to.equal('failed');
+        expect(broken.id).to.exist();
+        done();
+    });
+});
+
 var userId;
 
 lab.test('it can save a model', function (done) {

@@ -24,12 +24,12 @@
     "lab": "^5.2.1",
     "joi": "^6.0.0",
     "nedb": "^1.1.1",
-    "wadofgum": "^1.0.0"
+    "wadofgum": "^2.0.0"
   },
   "dependencies": {},
   "peerDependencies": {
     "joi": ">= 6.0.0",
     "nedb": "",
-    "wadofgum": ">= 1.0.0"
+    "wadofgum": ">= 2.0.0"
   }
 }
