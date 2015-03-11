@@ -24,7 +24,7 @@
     "lab": "^5.2.1",
     "joi": "^6.0.0",
     "nedb": "^1.1.1",
-    "wadofgum": "^2.0.0"
+    "wadofgum": "^2.1.1"
   },
   "dependencies": {},
   "peerDependencies": {
