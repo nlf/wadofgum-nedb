@@ -205,6 +205,42 @@ lab.test('returns a not found error when fetching a model by id that doesnt exis
     });
 });
 
+lab.test('can update a document', function (done) {
+
+    User.get(userId, function (err, user) {
+
+        expect(err).to.not.exist();
+        expect(user.id).to.equal(userId);
+        user.update({ $set: { name: 'testing' } }, function (err, updated) {
+
+            expect(err).to.not.exist();
+            expect(updated.name).to.equal('testing');
+
+            updated.update({ $set: { _id: 'bananas' } }, {}, function (err, updated) {
+
+                expect(err).to.exist();
+                expect(err).to.equal('You can\'t change a document\'s _id');
+                done();
+            });
+        });
+    });
+});
+
+lab.test('can batch update documents', function (done) {
+
+    User.update({ name: 'testing' }, { $set: { name: 'test' } }, function (err, num) {
+
+        expect(err).to.not.exist();
+        expect(num).to.equal(1);
+        User.update({ name: 'test' }, { $set: { name: 'testing' } }, {}, function (err, num) {
+
+            expect(err).to.not.exist();
+            expect(num).to.equal(1);
+            done();
+        });
+    });
+});
+
 lab.test('can remove a document', function (done) {
 
     User.get(userId, function (err, user) {
