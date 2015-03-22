@@ -26,7 +26,9 @@
     "nedb": "^1.1.1",
     "wadofgum": "^3.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bluebird": "^2.9.14"
+  },
   "peerDependencies": {
     "joi": ">= 6.0.0",
     "nedb": "",
