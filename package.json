@@ -1,8 +1,8 @@
 {
   "name": "wadofgum-nedb",
-  "version": "3.0.1",
-  "description": "an nedb plugin for wadofgum",
-  "main": "index.js",
+  "version": "4.0.0",
+  "description": "an nedb mixin for wadofgum",
+  "main": "lib/index.js",
   "scripts": {
     "test": "lab -a code -t 100 -L"
   },
@@ -20,18 +20,17 @@
   },
   "homepage": "https://github.com/nlf/wadofgum-nedb",
   "devDependencies": {
-    "code": "^1.3.0",
-    "lab": "^5.2.1",
-    "joi": "^6.0.0",
-    "nedb": "^1.1.1",
-    "wadofgum": "^3.0.0"
+    "code": "^1.5.0",
+    "lab": "^6.2.0",
+    "nedb": "^1.0.0",
+    "wadofgum": "^4.0.0",
+    "wadofgum-validation": "^1.0.0"
   },
   "dependencies": {
-    "bluebird": "^2.9.14"
+    "joi": "^6.9.0"
   },
   "peerDependencies": {
-    "joi": ">= 6.0.0",
-    "nedb": "",
-    "wadofgum": ">= 3.0.0"
+    "wadofgum": "^4.0.0",
+    "nedb": "^1.0.0"
   }
 }
