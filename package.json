@@ -1,6 +1,6 @@
 {
   "name": "wadofgum-nedb",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "an nedb mixin for wadofgum",
   "main": "lib/index.js",
   "scripts": {
