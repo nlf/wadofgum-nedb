@@ -40,8 +40,7 @@ lab.test('it can save a model', function (done) {
     let user = new User({ name: 'test' });
     user.save().then(() => {
 
-        expect(user).to.contain('name', '_type', '_id');
-        expect(user._type).to.equal(user.constructor.name);
+        expect(user).to.contain('name', '_id');
         done();
     }).catch(done);
 });
@@ -257,7 +256,7 @@ lab.describe('when used with validation', function () {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.schema = Joi.object({ name: Joi.string() });
-        expect(User.meta.get('keys')).to.contain('name', '_id', '_type');
+        expect(User.meta.get('keys')).to.contain('name', '_id');
         done();
     });
 
@@ -265,7 +264,7 @@ lab.describe('when used with validation', function () {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.schema = { name: Joi.string() };
-        expect(User.meta.get('keys')).to.contain('name', '_id', '_type');
+        expect(User.meta.get('keys')).to.contain('name', '_id');
         done();
     });
 
@@ -291,7 +290,6 @@ lab.describe('when used with validation', function () {
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
-            expect(user).to.not.contain('_type');
             done();
         }).catch(done);
     });
@@ -305,7 +303,6 @@ lab.describe('when used with validation', function () {
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
-            expect(user).to.not.contain('_type');
             let user2 = new User({ _id: user._id });
             return user2.get().then(() => {
 
@@ -324,7 +321,6 @@ lab.describe('when used with validation', function () {
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
-            expect(user).to.not.contain('_type');
             return User.find({ name: 'test' });
         }).then((users) => {
 
@@ -343,7 +339,6 @@ lab.describe('when used with validation', function () {
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
-            expect(user).to.not.contain('_type');
             return User.findOne({ name: 'test' });
         }).then((innerUser) => {
 
