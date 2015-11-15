@@ -6,10 +6,10 @@ const Mixin = require('..');
 const Validation = require('wadofgum-validation');
 const Wadofgum = require('wadofgum');
 
-let lab = exports.lab = require('lab').script();
-let expect = require('code').expect;
+const lab = exports.lab = require('lab').script();
+const expect = require('code').expect;
 
-lab.test('it can be loaded', function (done) {
+lab.test('it can be loaded', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     expect(User).to.exist();
@@ -17,7 +17,7 @@ lab.test('it can be loaded', function (done) {
     done();
 });
 
-lab.test('it can have a db associated', function (done) {
+lab.test('it can have a db associated', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
@@ -25,7 +25,7 @@ lab.test('it can have a db associated', function (done) {
     done();
 });
 
-lab.test('it does nothing when attempting to set a schema without a validation mixin', function (done) {
+lab.test('it does nothing when attempting to set a schema without a validation mixin', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.schema = { name: Joi.string() };
@@ -33,11 +33,11 @@ lab.test('it does nothing when attempting to set a schema without a validation m
     done();
 });
 
-lab.test('it can save a model', function (done) {
+lab.test('it can save a model', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     user.save().then(() => {
 
         expect(user).to.contain('name', '_id');
@@ -45,10 +45,10 @@ lab.test('it can save a model', function (done) {
     }).catch(done);
 });
 
-lab.test('it rejects when attempting to save when no db is assigned', function (done) {
+lab.test('it rejects when attempting to save when no db is assigned', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     user.save().catch((err) => {
 
         expect(err.message).to.equal('No db assigned to model class: User');
@@ -56,14 +56,14 @@ lab.test('it rejects when attempting to save when no db is assigned', function (
     }).catch(done);
 });
 
-lab.test('it can fetch a model given its id', function (done) {
+lab.test('it can fetch a model given its id', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     user.save().then(() => {
 
-        let user2 = new User({ _id: user._id });
+        const user2 = new User({ _id: user._id });
         expect(user2.name).to.not.exist();
         return user2.get().then(() => {
 
@@ -73,11 +73,11 @@ lab.test('it can fetch a model given its id', function (done) {
     }).catch(done);
 });
 
-lab.test('it returns an error when an id is not found', function (done) {
+lab.test('it returns an error when an id is not found', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     user.get().catch((err) => {
 
         expect(err.message).to.equal('Not found');
@@ -85,14 +85,14 @@ lab.test('it returns an error when an id is not found', function (done) {
     }).catch(done);
 });
 
-lab.test('it can remove a model', function (done) {
+lab.test('it can remove a model', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     user.save().then(() => {
 
-        let id = user._id;
+        const id = user._id;
         return user.remove().then(() => {
 
             return User.findOne({ _id: id });
@@ -105,14 +105,14 @@ lab.test('it can remove a model', function (done) {
     }).catch(done);
 });
 
-lab.test('it can count models', function (done) {
+lab.test('it can count models', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
     User.count({ name: 'test' }).then((count) => {
 
         expect(count).to.equal(0);
-        let user = new User({ name: 'test' });
+        const user = new User({ name: 'test' });
         return user.save();
     }).then(() => {
 
@@ -124,11 +124,11 @@ lab.test('it can count models', function (done) {
     }).catch(done);
 });
 
-lab.test('it can find models', function (done) {
+lab.test('it can find models', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     User.find({ name: 'test' }).then((models) => {
 
         expect(models.length).to.equal(0);
@@ -144,11 +144,11 @@ lab.test('it can find models', function (done) {
     }).catch(done);
 });
 
-lab.test('it can find a single model', function (done) {
+lab.test('it can find a single model', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     User.findOne({ name: 'test' }).catch((err) => {
 
         expect(err.message).to.equal('Not found');
@@ -163,11 +163,11 @@ lab.test('it can find a single model', function (done) {
     }).catch(done);
 });
 
-lab.test('it can update models with a full document', function (done) {
+lab.test('it can update models with a full document', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     User.find({ name: 'test' }).then((models) => {
 
         expect(models.length).to.equal(0);
@@ -192,11 +192,11 @@ lab.test('it can update models with a full document', function (done) {
     }).catch(done);
 });
 
-lab.test('it can update models with a partial update', function (done) {
+lab.test('it can update models with a partial update', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     User.find({ name: 'test' }).then((models) => {
 
         expect(models.length).to.equal(0);
@@ -221,11 +221,11 @@ lab.test('it can update models with a partial update', function (done) {
     }).catch(done);
 });
 
-lab.test('it can update models with options', function (done) {
+lab.test('it can update models with options', (done) => {
 
     class User extends Wadofgum.mixin(Mixin) {};
     User.db = new NeDB();
-    let user = new User({ name: 'test' });
+    const user = new User({ name: 'test' });
     User.find({ name: 'test' }).then((models) => {
 
         expect(models.length).to.equal(0);
@@ -250,9 +250,9 @@ lab.test('it can update models with options', function (done) {
     }).catch(done);
 });
 
-lab.describe('when used with validation', function () {
+lab.describe('when used with validation', () => {
 
-    lab.test('it can extend a given schema', function (done) {
+    lab.test('it can extend a given schema', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.schema = Joi.object({ name: Joi.string() });
@@ -260,7 +260,7 @@ lab.describe('when used with validation', function () {
         done();
     });
 
-    lab.test('it can extend a given schema by plain object', function (done) {
+    lab.test('it can extend a given schema by plain object', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.schema = { name: Joi.string() };
@@ -268,12 +268,12 @@ lab.describe('when used with validation', function () {
         done();
     });
 
-    lab.test('it validates before saving', function (done) {
+    lab.test('it validates before saving', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.db = new NeDB();
         User.schema = Joi.object({ name: Joi.string().required() });
-        let user = new User();
+        const user = new User();
         user.save().catch((err) => {
 
             expect(err.name).to.equal('ValidationError');
@@ -281,12 +281,12 @@ lab.describe('when used with validation', function () {
         }).catch(done);
     });
 
-    lab.test('it validates after saving', function (done) {
+    lab.test('it validates after saving', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.db = new NeDB();
         User.schema = Joi.object({ name: Joi.string().required() });
-        let user = new User({ name: 'test' });
+        const user = new User({ name: 'test' });
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
@@ -294,16 +294,16 @@ lab.describe('when used with validation', function () {
         }).catch(done);
     });
 
-    lab.test('it validates after getting a model instance', function (done) {
+    lab.test('it validates after getting a model instance', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.db = new NeDB();
         User.schema = Joi.object({ name: Joi.string().required() });
-        let user = new User({ name: 'test' });
+        const user = new User({ name: 'test' });
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
-            let user2 = new User({ _id: user._id });
+            const user2 = new User({ _id: user._id });
             return user2.get().then(() => {
 
                 expect(user2).to.deep.equal(user);
@@ -312,12 +312,12 @@ lab.describe('when used with validation', function () {
         }).catch(done);
     });
 
-    lab.test('it validates after finding models', function (done) {
+    lab.test('it validates after finding models', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.db = new NeDB();
         User.schema = Joi.object({ name: Joi.string().required() });
-        let user = new User({ name: 'test' });
+        const user = new User({ name: 'test' });
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
@@ -330,12 +330,12 @@ lab.describe('when used with validation', function () {
         }).catch(done);
     });
 
-    lab.test('it validates after finding one model', function (done) {
+    lab.test('it validates after finding one model', (done) => {
 
         class User extends Wadofgum.mixin(Validation, Mixin) {};
         User.db = new NeDB();
         User.schema = Joi.object({ name: Joi.string().required() });
-        let user = new User({ name: 'test' });
+        const user = new User({ name: 'test' });
         user.save().then(() => {
 
             expect(user).to.contain('_id', 'name');
